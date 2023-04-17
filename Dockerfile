@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt
 # Копируем все содержимое текущей директории внутрь контейнера
 COPY . .
 
-��RUN python manage.py makemigrations
+RUN python manage.py makemigrations
 # Применяем миграции
 RUN python manage.py migrate
 

@@ -19,6 +19,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     descriptions = models.CharField(max_length=366)
     price = models.IntegerField()
+    count = models.IntegerField()
 
 
 class Order(models.Model):
