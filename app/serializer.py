@@ -30,9 +30,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
     class Meta:
         model = Cart
-        fields = '__all__'
+        fields = ['products']
 
 
 class OrderSerializer(serializers.ModelSerializer):

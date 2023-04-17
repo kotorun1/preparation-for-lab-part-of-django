@@ -193,7 +193,7 @@ def orderView(request):
                 "code": 422,
                 "message": "Cart is empty",
             }})
-        order, _ = Order.objects.get_or_create(user=request.user)
+        order = Order.objects.create(user=request.user)
         results = Cart.objects.all()
         for staff in results:
             for product in staff.products.all():
