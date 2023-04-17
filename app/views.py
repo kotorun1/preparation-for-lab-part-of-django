@@ -155,7 +155,7 @@ def createCartView(request, product_id):
         return Response({"body": {'message': "Item removed from cart"}}, status=HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['GET','PATCH'])
 @permission_classes([IsAuthenticated])
 def getCartView(request):
     try:
@@ -172,19 +172,8 @@ def getCartView(request):
         return Response({
             'body': serializer.data
         }, status=HTTP_200_OK)
-
-@api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
-def patchCartView(req):
-    try:
-        item = Cart.objects.get(user=req)
-    except:
-        return Response({"error":{
-            "code":404,
-            "message":"Не найдено"
-        }}, status=HTTP_404_NOT_FOUND)
-    if req.method == 'PATCH':
-        serializer = CartSerializer(item, data=req.data, partial=True)
+    if request.method == 'PATCH':
+        serializer = CartSerializer(item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({serializer.data}, status=HTTP_200_OK)
