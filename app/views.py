@@ -173,6 +173,23 @@ def getCartView(request):
             'body': serializer.data
         }, status=HTTP_200_OK)
 
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def patchCartView(req):
+    try:
+        item = Cart.objects.get(user=req)
+    except:
+        return Response({"error":{
+            "code":404,
+            "message":"Не найдено"
+        }}, status=HTTP_404_NOT_FOUND)
+    if req.method == 'PATCH':
+        serializer = CartSerializer(item, data=req.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({serializer.data}, status=HTTP_200_OK)
+        return Response({serializer.errors}, status=HTTP_404_NOT_FOUND)
+
 
 # 47 минут делал корзину
 
